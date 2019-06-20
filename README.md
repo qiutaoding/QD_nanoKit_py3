@@ -1,6 +1,6 @@
 # nanoKit_py3  
-This kit design to convert **nanopore sequnecing data**   
-fast5 to fastq read id/read name convertion. Also, I built a N50 calculator designed for assembly.   
+  This kit design to convert **nanopore sequnecing data**   
+  fast5 to fastq read id/read name convertion. Also, I built a N50 calculator designed for assembly.   
 :rocket:   
 ----  
 ## fast5toreadid.py   
