@@ -1,12 +1,13 @@
 # nanoKit_py3
+this kit design to convert nanopore sequnecing data fast5 to fastq read id/read name convertion. Also, I built a N50 calculator designed for assembly.
 ##fast5toreadid.py
-###Quick start
+This tool is designed to extract million of fast5 files from nanopore sequencing to basecalled read id (read name)
 '''
 -i --input directory
 -s --save directory
 '''
-This tool is designed to extract million of fast5 files from nanopore sequencing to basecalled read id (read name)
 Test tool using:
+
 '''
 fast5toreadid.py -i fast5_test/ -s fast5toreadid_test_result/
 '''
