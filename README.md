@@ -18,6 +18,6 @@ This kit design to convert **nanopore sequnecing data** fast5 to fastq read id/r
 -r --reference reference sequence to be trimmed from nanopore reads
 -o --output output directory to store the trimmed sequence
 ### Quick start  
-    FosmidSequencingRemoveVector.py -r fosmid_sample/pSMART_BAC.fa -i fosmid_sample/sample03.fa -o fosmid_sample/result/ > fosmid_sample/result/not_vector.fa  
+    FosmidSequencingRemoveVector.py -r fosmid_sample/pSMART_BAC.fa -i fosmid_sample/sample03.fa -o fosmid_sample/result/trimmed_reads.fa > fosmid_sample/result/not_vector.fa  
 ## Author  
 * **Qiutao DING** - *Initial work* 
