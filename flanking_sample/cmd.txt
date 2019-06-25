@@ -1,0 +1,1 @@
+sepFosmid.py -r QD_nanoKit_py3/flanking_sample/trimming.fa -i QD_nanoKit_py3/flanking_sample/trim_barcode01.fa -o QD_nanoKit_py3/flanking_sample/LR.txt -t 4

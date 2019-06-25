@@ -48,8 +48,8 @@ def align(aligner, reads, output):
                 seq_R=''
                 if alignInfo.strand == 1:
                     if len(read) - alignInfo.q_en >= 100 and alignInfo.q_st >= 100: # if positive strand mapping to pSMART backbone with both genomic flankings longer than 100 bp
-                        seq_L = str(read.seq)[:int(alignInfo.q_st)-1]
-                        seq_R = str(read.seq)[int(alignInfo.q_en):]
+                        seq_L = str(read.seq)[:int(alignInfo.q_st)]
+                        seq_R = str(read.seq)[int(alignInfo.q_en)+1:]
                         header_L = str(">%s_L len:%i strand:%i\n" % (read.id, len(seq_L), alignInfo.strand))
                         fw.write(header_L)
                         fw.write(seq_L+"\n")
@@ -57,19 +57,19 @@ def align(aligner, reads, output):
                         fw.write(header_R)
                         fw.write(seq_R+"\n")
                     elif len(read) - alignInfo.q_en >= 100: # if right flanking is longer than 100 bp ,with shorted than 100 bp left flanking or no left flanking sequence
-                        seq_R = str(read.seq)[int(alignInfo.q_en):]
+                        seq_R = str(read.seq)[int(alignInfo.q_en)+1:]
                         header_R = str(">%s_R_only len:%i strand:%i\n" % (read.id, len(seq_R), alignInfo.strand))
                         fw.write(header_R)
                         fw.write(seq_R+"\n")
                     elif alignInfo.q_st >= 100: # if left flanking is longer than 100 bp ,with shorted than 100 bp right flanking or no left flanking sequence
-                        seq_L = str(read.seq)[:int(alignInfo.q_st)-1]
+                        seq_L = str(read.seq)[:int(alignInfo.q_st)]
                         header_L = str(">%s_L_only len:%i strand:%i\n" % (read.id, len(seq_L), alignInfo.strand))
                         fw.write(header_L)
                         fw.write(seq_L+"\n")
                 elif alignInfo.strand == -1: #if read is reverse complementary to vector sequence
                     if len(read) - alignInfo.q_en >= 100 and alignInfo.q_st >= 100: # if read mapping to pSMART backbonenegative strand with both genomic flankings longer than 100 bp
-                        seq_L = str(read.seq.reverse_complement())[:len(read)-int(alignInfo.q_en)]
-                        seq_R = str(read.seq.reverse_complement())[len(read)-int(alignInfo.q_st)+1:]
+                        seq_L = str(read.seq[int(alignInfo.q_en)+1:].reverse_complement())
+                        seq_R = str(read.seq[:int(alignInfo.q_st)].reverse_complement())
                         header_L = str(">%s_L len:%i strand:%i\n" % (read.id, len(seq_L), alignInfo.strand))
                         fw.write(header_L)
                         fw.write(seq_L+"\n")
@@ -77,12 +77,12 @@ def align(aligner, reads, output):
                         fw.write(header_R)
                         fw.write(seq_R+"\n")
                     elif len(read) - alignInfo.q_en >= 100: # if left flanking is longer than 100 bp ,with shorted than 100 bp left flanking or no left flanking sequence
-                        seq_L = str(read.seq.reverse_complement())[:len(read)-int(alignInfo.q_en)]
+                        seq_L = str(read.seq[int(alignInfo.q_en)+1:].reverse_complement())
                         header_L = str(">%s_L len:%i strand:%i\n" % (read.id, len(seq_L), alignInfo.strand))
                         fw.write(header_L)
                         fw.write(seq_L+"\n")
                     elif alignInfo.q_st >= 100: # if left flanking is longer than 100 bp ,with shorted than 100 bp right flanking or no left flanking sequence
-                        seq_R = str(read.seq.reverse_complement())[len(read)-int(alignInfo.q_st)+1:]
+                        seq_R = str(read.seq[:int(alignInfo.q_st)].reverse_complement())
                         header_R = str(">%s_R len:%i strand:%i\n" % (read.id, len(seq_R), alignInfo.strand))
                         fw.write(header_R)
                         fw.write(seq_R+"\n")      
