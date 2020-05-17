@@ -1,4 +1,4 @@
-setwd("D:/rDNA/")
+setwd("F:/nanopore_data/rDNA/recall_rdna_analysis/SNP")
 library("ggplot2")
 library(scales)
 library(grid)
@@ -7,15 +7,10 @@ library(gridExtra)
 cel <-c("N2EM", "N2L1", "N2YA", "CB4856")
 cbr <- c("AF16")
 cel_rdna <- c("5S")
-cbr_rdna <-c("5S_unit1", "5S_unit2")
+cbr_rdna <-c("5S", "5S2")
 coverage = c(N2EM= 100.272, N2L1 = 35.6229, N2YA = 48.2667, AF16=90.8984, CB4856 = 128.261)
 seg_hight = 9
 txt_hight = 9.5
-
-#modify depends on demand
-stage =  "N2L1"
-rDNA =  "5S"
-plot_indel( "AF16", "5S2" )
 
 #tables were generated from SAM files with read_SAM_for_INDEL.ipynb 
 plot_indel <- function(stage , rDNA){
@@ -28,13 +23,13 @@ plot_indel <- function(stage , rDNA){
     rRNA_end <- 295
     SL1_start <-976
     SL1_end <-879
-  }else if (stage %in% cbr_rdna){
-    if (rDNA =="5S_unit1"){
+  }else if (stage %in% cbr){
+    if (rDNA =="5S"){
       rRNA_start <- 218
       rRNA_end <- 336
       SL1_start <-938
       SL1_end <- 842
-    }else if (rDNA == "5S_unit2"){
+    }else if (rDNA == "5S2"){
       rRNA_start <- 169
       rRNA_end <- 287
       SL1_start <-597
@@ -119,6 +114,14 @@ plot_indel <- function(stage , rDNA){
   grid.arrange(p2, p5,p10, nrow = 3) # Write the grid.arrange in the file
   dev.off()
 }
+
+#modify depends on demand
+plot_indel( "N2EM", "5S" )
+plot_indel( "N2L1", "5S" )
+plot_indel( "N2YA", "5S" )
+plot_indel( "CB4856", "5S" )
+plot_indel( "AF16", "5S" )
+plot_indel( "AF16", "5S2" )
 
 
 
