@@ -1,4 +1,4 @@
-setwd("D:/rDNA/")
+setwd("F:/nanopore_data/rDNA/recall_rdna_analysis/SNP/for_new_variant/")
 library("ggplot2")
 library(scales)
 library(grid)
