@@ -1,9 +1,10 @@
+#set working directry
 setwd("F:/nanopore_data/rDNA/recall_rdna_analysis/SNP/for_new_variant/")
-library("ggplot2")
+library(ggplot2)
 library(scales)
 library(grid)
 library(gridExtra)
-#preset
+#preset data 
 cel <-c("N2EM", "N2L1", "N2YA", "CB4856")
 cbr <- c("AF16")
 cel_rdna <- c("5S")
@@ -12,7 +13,7 @@ coverage = c(N2EM= 100.272, N2L1 = 35.6229, N2YA = 48.2667, AF16=90.8984, CB4856
 seg_hight = 9
 txt_hight = 9.5
 
-#modify depends on demand
+#modify depends on demand, plot_indel() function should be run before run the plotting command
 #5S rDNA
 plot_indel( "N2EM", "5S" )
 plot_indel( "N2L1", "5S" )
@@ -29,10 +30,11 @@ plot_45S_indel( "AF16", "45S" )
 
 #tables were generated from SAM files with read_SAM_for_INDEL.ipynb 
 plot_indel <- function(stage , rDNA){
+  #read in processed data
   df2=read.table(paste0("indel_df/",stage,"_", rDNA,"_bin_", 2 ,".tsv"), header =T , sep = "\t")
   df5=read.table(paste0("indel_df/",stage,"_", rDNA,"_bin_", 5 ,".tsv"), header =T , sep = "\t")
   df10=read.table(paste0("indel_df/",stage,"_", rDNA,"_bin_", 10 ,".tsv"), header =T , sep = "\t")
-  
+  #rRNA and sl1 start and end position
   if (stage %in% cel){
     rRNA_start <- 177
     rRNA_end <- 295
@@ -51,6 +53,7 @@ plot_indel <- function(stage , rDNA){
       SL1_end <- 693
     }
   }
+  #INDEL size > 10 in ONT reads mapping results
   p10 <- ggplot(df10) + 
     geom_histogram( aes(pos, weight = DEL/coverage[stage]),
                     binwidth = 1 , fill = "#F8766D")+
@@ -75,6 +78,7 @@ plot_indel <- function(stage , rDNA){
           axis.text = element_text(size = 10, color = "black"),
           axis.title = element_text(size= 12,colour = "black"),
           axis.title.x = element_blank())
+  #INDEL size > 5 in ONT reads mapping results
   p5 <- ggplot(df5) + 
     geom_histogram( aes(pos, weight = DEL/coverage[stage]),
                     binwidth = 1 , fill = "#F8766D")+
@@ -99,6 +103,7 @@ plot_indel <- function(stage , rDNA){
           axis.text = element_text(size = 10, color = "black"),
           axis.title = element_text(size= 12,colour = "black"),
           axis.title.x = element_blank())
+  #INDEL size > 2 in ONT reads mapping results
   p2 <- ggplot(df2) + 
     geom_histogram( aes(pos, weight = DEL/coverage[stage]),
                     binwidth = 1 , fill = "#F8766D")+
@@ -123,8 +128,7 @@ plot_indel <- function(stage , rDNA){
           axis.text = element_text(size = 10, color = "black"),
           axis.title = element_text(size= 12,colour = "black"),
           axis.title.x = element_blank())
-  
-  
+  #print three plot in single PDF
   pdf(paste0("plot/", stage,"_", rDNA, "_bins.pdf"), width = 8, height = 12) # Open a new pdf file
   grid.arrange(p2, p5,p10, nrow = 3) # Write the grid.arrange in the file
   dev.off()
