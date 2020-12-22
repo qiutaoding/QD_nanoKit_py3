@@ -47,10 +47,10 @@ plot_indel <- function(stage , rDNA){
       SL1_start <-938
       SL1_end <- 842
     }else if (rDNA == "5S2"){
-      rRNA_start <- 169
-      rRNA_end <- 287
-      SL1_start <-597
-      SL1_end <- 693
+      rRNA_start <- 171
+      rRNA_end <- 289
+      SL1_start <-600
+      SL1_end <- 696
     }
   }
   #INDEL size > 10 in ONT reads mapping results
